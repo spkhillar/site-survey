@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="srivastava" id="1367592120329-39">
+		<createTable tableName="article">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="title" type="VARCHAR(100)" />
+			<column name="description" type="VARCHAR(300)" />
+			<column name="content" type="TEXT" />
+			<column name="image_path" type="VARCHAR(300)" />
+			<column name="parent_article_id" type="BIGINT" />
+			<column name="created_at" type="TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_by" type="BIGINT" />
+			<column name="updated_at" type="TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="updated_by" type="BIGINT" />
+		</createTable>
+		<modifySql dbms="mysql">
+			<append value=" engine innodb" />
+		</modifySql>
+	</changeSet>
+	<changeSet author="shiv" id="1367592120329-40">
+		<createTable tableName="subscription_type">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="description" type="VARCHAR(300)">
+				<constraints nullable="false"></constraints>
+			</column>
+			<column name="duration" type="INT">
+				<constraints nullable="false"></constraints>
+			</column>
+			<column name="price" type="DECIMAL(10,2)" />
+			<column name="created_at" type="TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="updated_at" type="TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="version" type="INT" />
+		</createTable>
+		<modifySql dbms="mysql">
+			<append value=" engine innodb" />
+		</modifySql>
+	</changeSet>
+
+	<changeSet author="shiv" id="1367592120329-41">
+		<createTable tableName="subscription">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="user_id" type="BIGINT" />
+			<column name="subscription_type" type="BIGINT" />
+			<column name="parent_subscription_id" type="BIGINT" />
+			<column name="start_date" type="TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="end_date" type="TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="updated_at" type="TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="version" type="INT" />
+		</createTable>
+		<modifySql dbms="mysql">
+			<append value=" engine innodb" />
+		</modifySql>
+	</changeSet>
+
+	<changeSet author="" id="1367592120329-42">
+		<addForeignKeyConstraint baseColumnNames="subscription_type"
+			baseTableName="subscription" constraintName="subscription_type_fk"
+			deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+			onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="subscription_type"
+			referencesUniqueColumn="false" />
+	</changeSet>
+
+	<changeSet author="" id="1367592120329-43">
+		<addForeignKeyConstraint baseColumnNames="parent_subscription_id"
+			baseTableName="subscription" constraintName="parent_subscription_fk"
+			deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+			onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="subscription"
+			referencesUniqueColumn="false" />
+	</changeSet>
+
+	<changeSet author="" id="1367592120329-44">
+		<addForeignKeyConstraint baseColumnNames="user_id"
+			baseTableName="subscription" constraintName="subscription__user_id_fk"
+			deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+			onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"
+			referencesUniqueColumn="false" />
+	</changeSet>
+
+
+	<changeSet author="shiv" id="1367592120329-45">
+		<createTable tableName="user_transaction">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="user_id" type="BIGINT">
+				<constraints nullable="false"></constraints>
+			</column>
+			<column name="subscription_id" type="BIGINT">
+				<constraints nullable="false"></constraints>
+			</column>
+			<column name="transaction_id" type="VARCHAR(100)">
+				<constraints nullable="false"></constraints>
+			</column>
+			<column name="amount" type="DECIMAL(10,2)" />
+			<column name="payment_date" type="TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="version" type="INT" />
+		</createTable>
+		<modifySql dbms="mysql">
+			<append value=" engine innodb" />
+		</modifySql>
+	</changeSet>
+
+	<changeSet author="" id="1367592120329-46">
+		<addForeignKeyConstraint baseColumnNames="subscription_id"
+			baseTableName="user_transaction" constraintName="user_transaction_sub_fk"
+			deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+			onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="subscription"
+			referencesUniqueColumn="false" />
+	</changeSet>
+
+	<changeSet author="" id="1367592120329-47">
+		<addForeignKeyConstraint baseColumnNames="user_id"
+			baseTableName="user_transaction" constraintName="user_transaction__user_id_fk"
+			deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+			onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"
+			referencesUniqueColumn="false" />
+	</changeSet>
+
+	<changeSet author="" id="1367592120329-48">
+		<addColumn tableName="user_transaction">
+			<column name="transaction_details" type="VARCHAR(512)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="" id="1367592120329-49">
+		<addColumn tableName="subscription">
+			<column name="enabled" type="BIT" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="" id="2997592120329-51">
+		<addColumn tableName="user">
+			<column name="discriminator" type="CHAR(1)"></column>
+			<column name="phone_verfication_code" type="VARCHAR(6)"></column>
+			<column name="phone_verified" type="BIT"></column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="shiv" id="2997592120329-52">
+		<createTable tableName="comments">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="comment" type="VARCHAR(1024)"></column>
+			<column name="approved" type="BIT"></column>
+			<column name="article_id" type="BIGINT" />
+			<column name="user_id" type="BIGINT" />
+			<column name="created_at" type="TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="updated_at" type="TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="version" type="INT" />
+		</createTable>
+		<modifySql dbms="mysql">
+			<append value=" engine innodb" />
+		</modifySql>
+	</changeSet>
+
+	<changeSet author="srivastava" id="1386971521-01">
+		<createTable tableName="security_question">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="question" type="VARCHAR(1024)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<modifySql dbms="mysql">
+			<append value=" engine innodb" />
+		</modifySql>
+	</changeSet>
+
+	<changeSet author="shiv" id="1386974306-03">
+		<createTable tableName="security_question_answer">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+
+			<column name="password_hint" type="VARCHAR(512)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="answer" type="VARCHAR(1024)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="version" type="INT">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="user_id" type="BIGINT">
+				<constraints nullable="false"></constraints>
+			</column>
+			<column name="question_id" type="BIGINT">
+				<constraints nullable="false"></constraints>
+			</column>
+		</createTable>
+	</changeSet>
+
+
+	<changeSet author="SUNNY" id="1386974306-04">
+		<addForeignKeyConstraint baseColumnNames="user_id"
+			baseTableName="security_question_answer" constraintName="userid_security_question_fk"
+			deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+			onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"
+			referencesUniqueColumn="false" />
+
+	</changeSet>
+
+	<changeSet author="sunny" id="1386975653-05">
+		<addForeignKeyConstraint baseColumnNames="question_id"
+			baseTableName="security_question_answer" constraintName="questionid_security_question_fk"
+			deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+			onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="security_question"
+			referencesUniqueColumn="false" />
+	</changeSet>
+	<changeSet  author="satyam" id="1386975653-06">	    
+		   <addColumn tableName="user">
+		    <column name="image_path" type="VARCHAR(300)"></column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet  author="shiv" id="1386975653-07">	   
+		<modifyDataType tableName="comments" columnName="approved" newDataType="INT"/>
+	    <renameColumn tableName="comments" oldColumnName="approved" newColumnName="status" columnDataType="INT"/> 
+	</changeSet>
+</databaseChangeLog>

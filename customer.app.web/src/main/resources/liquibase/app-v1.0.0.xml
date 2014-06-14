@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	<changeSet author="Shiv" id="3990006636842-10">
+		<update tableName="user">
+			<column name="discriminator" value="U"></column>
+			<column name="phone_verified" valueBoolean="true"></column>
+		</update>
+	</changeSet>
+
+	<changeSet id="3990006636842-11" author="Shiv">
+		<insert tableName="subscription_type">
+			<column name="id" value="1"></column>
+			<column name="description" value="Trial Subscription "></column>
+			<column name="duration" value="15"></column>
+			<column name="price" value="0"></column>
+			<column name="created_at" valueDate="2013-12-08 00:27:19"></column>
+			<column name="updated_at" valueDate="2013-12-08 00:27:19"></column>
+			<column name="version" valueNumeric="0"></column>
+		</insert>
+	</changeSet>
+	<changeSet id="3990006636842-12" author="Shiv">
+		<insert tableName="subscription_type">
+			<column name="id" value="2"></column>
+			<column name="description" value="6 Month Subscription "></column>
+			<column name="duration" value="180"></column>
+			<column name="price" value="100"></column>
+			<column name="created_at" valueDate="2013-12-08 00:27:19"></column>
+			<column name="updated_at" valueDate="2013-12-08 00:27:19"></column>
+			<column name="version" valueNumeric="0"></column>
+		</insert>
+	</changeSet>
+	<changeSet id="3990006636842-13" author="Shiv">
+		<insert tableName="subscription_type">
+			<column name="id" value="3"></column>
+			<column name="description" value="12 Month Subscription "></column>
+			<column name="duration" value="360"></column>
+			<column name="price" value="200"></column>
+			<column name="created_at" valueDate="2013-12-08 00:27:19"></column>
+			<column name="updated_at" valueDate="2013-12-08 00:27:19"></column>
+			<column name="version" valueNumeric="0"></column>
+		</insert>
+	</changeSet>
+	<changeSet id="3990006636842-14" author="shubham">
+		<insert tableName="security_question">
+			<column name="question" value="Which city you were born in?"></column></insert>
+			<insert tableName="security_question">
+			<column name="question" value="Which is your favourite colour?"></column></insert>
+			<insert tableName="security_question">
+			<column name="question" value="What was your first cars colour?"></column></insert>
+			<insert tableName="security_question">
+			<column name="question" value="What was your childhood nickname?"></column>
+		</insert>
+	</changeSet>
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean id="aclMapping" class="com.service.impl.AclRoleMapperServiceImpl">
+		<property name="adminPrivilegeRoles">
+			<util:list>
+				<value>ROLE_ADMIN</value>
+			</util:list>
+		</property>
+		<property name="aclRoleMap">
+			<util:map>
+			<entry key="ROLE_ADMIN">
+				<util:list>
+					<util:constant static-field="org.springframework.security.acls.domain.BasePermission.ADMINISTRATION"/>
+				</util:list>
+			</entry>
+			<entry key="ROLE_USER">
+				<util:list>
+					<util:constant static-field="org.springframework.security.acls.domain.BasePermission.ADMINISTRATION"/>
+				</util:list>
+			</entry>
+			</util:map>
+		</property>
+	</bean>
+
+</beans>

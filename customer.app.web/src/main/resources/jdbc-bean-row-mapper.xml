@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BeanMappers>
+    <BeanMapper id="com.jpa.entities.User">
+        <property source="id" target="id"></property>
+        <property source="username" target="userName"></property>
+        <property source="password" target="password"></property>
+        <property source="first_name" target="firstName"></property>
+        <property source="last_name" target="lastName"></property>
+        <property source="email" target="email"></property>
+        <property source="enabled" target="enabled"></property>
+        <property source="phone" target="phone"></property>
+        <property source="created_at" target="createdAt"></property>
+    </BeanMapper>
+    
+</BeanMappers>
